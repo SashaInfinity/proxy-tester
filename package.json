@@ -8,7 +8,7 @@
     "build": "node ./build.cjs && pkg ./build/index.cjs -c package.json"
   },
   "pkg": {
-    "outputPath": "./",
+    "outputPath": "./build/",
     "targets": [
       "node18-win-x64"
     ]
