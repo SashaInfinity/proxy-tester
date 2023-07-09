@@ -9,7 +9,7 @@ function sleep(ms) {
 
 function calculateAverage(numbers) {
   if (numbers.length === 0) {
-    return 0; // Обрабатываем случай, когда массив пустой, возвращая 0 в качестве среднего арифметического.
+    return 0;
   }
 
   const sum = numbers.reduce((accumulator, currentValue) => accumulator + currentValue);
@@ -25,7 +25,7 @@ function calculateAverage(numbers) {
   const prompt = inquirer.createPromptModule();
 
   const pings = []
-  async function testProxy(proxy) {
+  async function testProxy(proxy, url) {
     let agent = null
     if (proxy) {
       const [host, port, username, password] = proxy.split(':');
@@ -33,7 +33,7 @@ function calculateAverage(numbers) {
     }
   
     const start = Date.now();
-    const res = await fetch('https://api-mainnet.magiceden.io/v2/ord/btc/collections', { 
+    const res = await fetch(url, { 
       agent,
       "method": "GET",
     })
@@ -43,22 +43,28 @@ function calculateAverage(numbers) {
     pings.push(end - start)
   }
 
+  const { url } = await prompt([{
+      type: 'input',
+      name: 'url',
+      message: `URL to send round-trip request: `
+  }])
+
   const { confirmation } = await prompt([{
       type: 'confirm',
       name: 'confirmation',
-      message: `Send with proxy?`,
-      loop: false,
-      pageSize: 10
+      message: `Send requests with proxy?`
   }])
+
+
 
   if (confirmation) {
     for (const proxy of proxyList) {
-      await testProxy(proxy);
+      await testProxy(proxy,url);
     }
     console.log('Average: ', calculateAverage(pings))
   } else {
     for (let index = 0; index < 100; index++) {
-      await testProxy();
+      await testProxy(null, url);
     }
     console.log('Average: ', calculateAverage(pings))
   }
