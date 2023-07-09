@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "axios": "^1.4.0",
+    "esbuild": "^0.18.11",
+    "http-proxy-agent": "^7.0.0"
+  },
+  "scripts": {
+    "build": "node ./build.cjs && pkg ./build/index.cjs -c package.json"
+  },
+  "pkg": {
+    "outputPath": "./",
+    "targets": [
+      "node18-win-x64"
+    ]
+  }
+}
