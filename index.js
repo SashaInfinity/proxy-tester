@@ -59,7 +59,10 @@ function calculateAverage(numbers) {
     }
     console.log('Average: ', calculateAverage(pings))
   } else {
-    await testProxy();
+    for (let index = 0; index < 100; index++) {
+      await testProxy(proxy);
+    }
+    console.log('Average: ', calculateAverage(pings))
   }
 
   await sleep(10000)
