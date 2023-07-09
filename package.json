@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "axios": "^1.4.0",
     "esbuild": "^0.18.11",
     "http-proxy-agent": "^7.0.0",
     "node-fetch": "^3.3.1"

@@ -38,7 +38,7 @@ const nativeNodeModulesPlugin = {
 }
 
 esbuild.build({
-  entryPoints: ['./index.cjs'], // Замените на свой файл входа
+  entryPoints: ['./index.js'], // Замените на свой файл входа
   bundle: true,
   platform: 'node',
   target: ['node18'],
