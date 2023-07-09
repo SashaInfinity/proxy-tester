@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import {HttpProxyAgent} from 'http-proxy-agent'
+import {HttpsProxyAgent} from 'https-proxy-agent'
 import fs from 'fs'
 import inquirer from 'inquirer'
 
@@ -29,16 +29,14 @@ function calculateAverage(numbers) {
     let agent = null
     if (proxy) {
       const [host, port, username, password] = proxy.split(':');
-      agent = new HttpProxyAgent({
-        host,
-        port,
-        auth: `${username}:${password}`
-      });
+      agent = new HttpsProxyAgent(`http://${username}:${password}@${host}:${port}`);
     }
   
-  
     const start = Date.now();
-    await fetch('https://api-mainnet.magiceden.io/v2/ord/btc/collections', { agent }).catch(error => {});
+    const res = await fetch('https://api-mainnet.magiceden.io/v2/ord/btc/collections', { 
+      agent,
+      "method": "GET",
+    })
     const end = Date.now();
   
     console.log(`Proxy ${proxy}: ${end - start}ms`);
